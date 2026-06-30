@@ -40,7 +40,7 @@ Linux-Helpdesk-Troubleshooting-Lab/
 ### Commands used
 
 ```powershell
-cd C:\Users\rband
+cd C:\Users\*****
 mkdir Linux-Helpdesk-Troubleshooting-Lab
 cd Linux-Helpdesk-Troubleshooting-Lab
 
@@ -64,7 +64,7 @@ code .
 
 | Command                                    | Purpose                                                |
 | ------------------------------------------ | ------------------------------------------------------ |
-| `cd C:\Users\rband`                        | Moves PowerShell to the user folder.                   |
+| `cd C:\Users\*****`                        | Moves PowerShell to the user folder.                   |
 | `mkdir Linux-Helpdesk-Troubleshooting-Lab` | Creates the main project folder.                       |
 | `cd Linux-Helpdesk-Troubleshooting-Lab`    | Moves into the project folder.                         |
 | `mkdir docs`                               | Creates the documentation folder.                      |
@@ -187,3 +187,98 @@ Screenshots:
 ![screenshot-02c-linux-baseline-network.png](screenshots/screenshot-02c-linux-baseline-network.png)
 
 ![screenshot-02d-linux-baseline-services.png](screenshots/screenshot-02d-linux-baseline-services.png)
+
+---
+
+## 2026-06-29 — Part 3: Create test users and groups
+
+### Goal
+
+Create safe lab users and groups for future helpdesk troubleshooting and permission testing.
+
+### Work completed
+
+* Created the `support` group.
+* Created the `staff` group.
+* Created the `alice` test user.
+* Created the `bob` test user.
+* Created home folders for both users.
+* Added `alice` to the `support` group.
+* Added `bob` to the `staff` group.
+* Set lab passwords for both users.
+* Verified user IDs and group memberships.
+* Verified user database entries.
+* Verified group database entries.
+* Verified home folder ownership and permissions.
+* Saved screenshot evidence.
+
+### Verification results
+
+| Item                   | Result        |
+| ---------------------- | ------------- |
+| Support group          | Created       |
+| Staff group            | Created       |
+| User `alice`           | Created       |
+| User `bob`             | Created       |
+| Alice group membership | `support`     |
+| Bob group membership   | `staff`       |
+| Alice home folder      | `/home/alice` |
+| Bob home folder        | `/home/bob`   |
+
+### Commands used
+
+```bash
+sudo groupadd support
+sudo groupadd staff
+
+sudo useradd -m -G support alice
+sudo useradd -m -G staff bob
+
+sudo passwd alice
+sudo passwd bob
+
+id alice
+id bob
+
+getent passwd alice
+getent passwd bob
+
+getent group support
+getent group staff
+
+ls -ld /home/alice
+ls -ld /home/bob
+```
+
+### Command purpose
+
+| Command                            | Purpose                                                           |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| `sudo groupadd support`            | Creates the `support` group.                                      |
+| `sudo groupadd staff`              | Creates the `staff` group.                                        |
+| `sudo useradd -m -G support alice` | Creates `alice`, creates her home folder and adds her to support. |
+| `sudo useradd -m -G staff bob`     | Creates `bob`, creates his home folder and adds him to staff.     |
+| `sudo passwd alice`                | Sets a lab password for `alice`.                                  |
+| `sudo passwd bob`                  | Sets a lab password for `bob`.                                    |
+| `id alice`                         | Shows Alice’s user ID and group memberships.                      |
+| `id bob`                           | Shows Bob’s user ID and group memberships.                        |
+| `getent passwd alice`              | Shows Alice’s user database entry.                                |
+| `getent passwd bob`                | Shows Bob’s user database entry.                                  |
+| `getent group support`             | Shows the `support` group entry and members.                      |
+| `getent group staff`               | Shows the `staff` group entry and members.                        |
+| `ls -ld /home/alice`               | Shows Alice’s home folder ownership and permissions.              |
+| `ls -ld /home/bob`                 | Shows Bob’s home folder ownership and permissions.                |
+
+### Notes
+
+The test users and groups are safe lab accounts used only for helpdesk troubleshooting practice.
+
+This part prepares the lab for future permission and folder access scenarios.
+
+The user `bob` should be lowercase. Linux usernames are case-sensitive, so `bob` and `Bob` are different accounts.
+
+### Evidence
+
+Screenshots:
+
+![screenshot-03a-linux-users-and-groups-created-and-verified.png](screenshots/screenshot-03a-linux-users-and-groups-created-and-verified.png)
