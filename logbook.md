@@ -722,3 +722,77 @@ Screenshots:
 ![screenshot-08c-linux-uptime-load-users.png](screenshots/screenshot-08c-linux-uptime-load-users.png)
 
 ![screenshot-08d-linux-top-cpu-processes.png](screenshots/screenshot-08d-linux-top-cpu-processes.png)
+
+---
+
+## 2026-06-30 — Part 9: Create troubleshooting report
+
+### Goal
+
+Create a final troubleshooting report that summarizes the completed Linux helpdesk troubleshooting work.
+
+### Work completed
+
+* Created `docs/troubleshooting-report.md`.
+* Summarized the Linux system baseline checks.
+* Summarized user and group creation.
+* Summarized shared folder and permission configuration.
+* Summarized the permission problem and fix.
+* Summarized stopped service troubleshooting.
+* Summarized log review work.
+* Summarized disk and system resource checks.
+* Added references to screenshot evidence.
+* Saved screenshot evidence showing the report file.
+
+### Verification results
+
+| Item                               | Result                           |
+| ---------------------------------- | -------------------------------- |
+| Report file                        | `docs/troubleshooting-report.md` |
+| Report status                      | Created                          |
+| System baseline section            | Included                         |
+| Users and groups section           | Included                         |
+| Shared folders section             | Included                         |
+| Permission troubleshooting section | Included                         |
+| Service troubleshooting section    | Included                         |
+| Log review section                 | Included                         |
+| Resource review section            | Included                         |
+| Screenshot evidence                | Referenced                       |
+| Report screenshot                  | Saved                            |
+
+### File created
+
+```text
+docs/troubleshooting-report.md
+```
+
+### Report contents
+
+The troubleshooting report includes:
+
+* Project purpose
+* Environment summary
+* Lab scope
+* System baseline findings
+* User and group findings
+* Shared folder and permission findings
+* Permission problem root cause and fix
+* Stopped service troubleshooting notes
+* Log review summary
+* Disk and system resource review
+* Final findings
+* Screenshot evidence references
+
+### Notes
+
+This part turns the previous lab work into a structured troubleshooting report.
+
+The report provides a clear summary of what was checked, what was configured, what was tested and what evidence was collected.
+
+This is useful for portfolio documentation because it shows not only that commands were run, but also that the results were understood and documented properly.
+
+### Evidence
+
+Screenshot:
+
+![screenshot-09a-linux-troubleshooting-report-created.png](screenshots/screenshot-09a-linux-troubleshooting-report-created.png)

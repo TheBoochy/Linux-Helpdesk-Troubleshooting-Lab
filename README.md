@@ -35,6 +35,7 @@ The goals of this lab are to:
 * Fix basic permission problems.
 * Troubleshoot a stopped service.
 * Review simple logs.
+* Create a troubleshooting report.
 * Document findings with screenshots.
 * Track work through Git and GitHub.
 
@@ -52,7 +53,7 @@ The goals of this lab are to:
 | Part 6  | Troubleshoot stopped service    | Complete |
 | Part 7  | Review logs                     | Complete |
 | Part 8  | Check disk and system resources | Complete |
-| Part 9  | Create troubleshooting report   | Planned  |
+| Part 9  | Create troubleshooting report   | Complete |
 | Part 10 | Final README and GitHub polish  | Planned  |
 
 ---
@@ -62,7 +63,8 @@ The goals of this lab are to:
 ```text
 Linux-Helpdesk-Troubleshooting-Lab/
 ├── docs/
-│   └── .gitkeep
+│   ├── .gitkeep
+│   └── troubleshooting-report.md
 ├── results/
 │   └── .gitkeep
 ├── screenshots/
@@ -86,7 +88,8 @@ Linux-Helpdesk-Troubleshooting-Lab/
 │   ├── screenshot-08a-linux-disk-usage.png
 │   ├── screenshot-08b-linux-memory-swap-usage.png
 │   ├── screenshot-08c-linux-uptime-load-users.png
-│   └── screenshot-08d-linux-top-cpu-processes.png
+│   ├── screenshot-08d-linux-top-cpu-processes.png
+│   └── screenshot-09a-linux-troubleshooting-report-created.png
 ├── scripts/
 │   └── .gitkeep
 ├── logbook.md
@@ -119,13 +122,15 @@ Simple system logs were reviewed with `journalctl`. Recent system logs, warning 
 
 Disk usage, memory usage, uptime, logged-in users and top CPU-consuming processes were reviewed as part of a basic Linux system resource check.
 
-The next step is to create a troubleshooting report.
+A troubleshooting report was created in `docs/troubleshooting-report.md`. The report summarizes the completed Linux helpdesk tasks, findings, commands and screenshot evidence from Parts 1 through 8.
+
+The next step is final README and GitHub polish.
 
 ---
 
 ## Skills demonstrated
 
-This project will demonstrate:
+This project demonstrates:
 
 * Basic Linux administration
 * Helpdesk-style troubleshooting
@@ -147,6 +152,7 @@ This project will demonstrate:
 * Memory and swap review with `free`
 * Uptime and load review
 * Process review with `ps`
+* Troubleshooting report writing
 * Network information review
 * Service status checks with `systemctl`
 * Screenshot-based evidence collection
@@ -159,10 +165,11 @@ This project will demonstrate:
 
 Main documentation files:
 
-| File         | Purpose                      |
-| ------------ | ---------------------------- |
-| `README.md`  | Main GitHub project overview |
-| `logbook.md` | Step-by-step project notes   |
+| File                             | Purpose                      |
+| -------------------------------- | ---------------------------- |
+| `README.md`                      | Main GitHub project overview |
+| `logbook.md`                     | Step-by-step project notes   |
+| `docs/troubleshooting-report.md` | Final troubleshooting report |
 
 Screenshot evidence is stored in the `screenshots/` folder.
 
@@ -190,6 +197,7 @@ Current screenshot evidence:
 | `screenshot-08b-linux-memory-swap-usage.png`                     | Memory and swap usage reviewed                  |
 | `screenshot-08c-linux-uptime-load-users.png`                     | Uptime, load and logged-in users reviewed       |
 | `screenshot-08d-linux-top-cpu-processes.png`                     | Top CPU-consuming processes reviewed            |
+| `screenshot-09a-linux-troubleshooting-report-created.png`        | Troubleshooting report created                  |
 
 Command results and verification output may be stored in:
 
