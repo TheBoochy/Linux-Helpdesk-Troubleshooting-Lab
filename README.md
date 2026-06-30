@@ -47,7 +47,7 @@ The goals of this lab are to:
 | Part 1  | Repository setup                | Complete |
 | Part 2  | Linux baseline check            | Complete |
 | Part 3  | Create test users and groups    | Complete |
-| Part 4  | Create shared support folders   | Planned  |
+| Part 4  | Create shared support folders   | Complete |
 | Part 5  | Fix permission problem          | Planned  |
 | Part 6  | Troubleshoot stopped service    | Planned  |
 | Part 7  | Review logs                     | Planned  |
@@ -72,7 +72,9 @@ Linux-Helpdesk-Troubleshooting-Lab/
 │   ├── screenshot-02b-linux-baseline-resources.png
 │   ├── screenshot-02c-linux-baseline-network.png
 │   ├── screenshot-02d-linux-baseline-services.png
-│   └── screenshot-03a-linux-users-and-groups-created-and-verified.png
+│   ├── screenshot-03a-linux-users-and-groups-created-and-verified.png
+│   ├── screenshot-04a-linux-shared-folders-created.png
+│   └── screenshot-04b-linux-shared-folder-access-test.png
 ├── scripts/
 │   └── .gitkeep
 ├── logbook.md
@@ -95,7 +97,9 @@ Basic service status was reviewed for SSH and firewalld.
 
 Test users and groups were created for future helpdesk troubleshooting tasks. The lab users `alice` and `bob` were created with home directories. The `support` and `staff` groups were also created, and group membership was verified with `id` and `getent`.
 
-The next step is to create shared support folders for permission testing.
+Shared folders were created under `/shared` for the `support` and `staff` groups. Folder ownership and permissions were configured so that members of the correct group can access their shared folder, while users outside the group are denied access.
+
+The next step is to create and fix a basic permission problem.
 
 ---
 
@@ -109,6 +113,10 @@ This project will demonstrate:
 * User and group review
 * Linux user creation
 * Linux group creation
+* Linux folder creation
+* Linux ownership management with `chown`
+* Linux permission management with `chmod`
+* Group-based access control
 * Disk and memory checks
 * Network information review
 * Service status checks with `systemctl`
@@ -139,6 +147,8 @@ Current screenshot evidence:
 | `screenshot-02c-linux-baseline-network.png`                      | Network interface and route review              |
 | `screenshot-02d-linux-baseline-services.png`                     | SSH and firewall service review                 |
 | `screenshot-03a-linux-users-and-groups-created-and-verified.png` | Test users and groups creation and verification |
+| `screenshot-04a-linux-shared-folders-created.png`                | Shared folder ownership and permission setup    |
+| `screenshot-04b-linux-shared-folder-access-test.png`             | Shared folder access and blocked access test    |
 
 Command results and verification output may be stored in:
 
@@ -282,6 +292,96 @@ These accounts will be used later to test folder access, group permissions and b
 Screenshot link:
 
 [screenshot-03a-linux-users-and-groups-created-and-verified.png](screenshots/screenshot-03a-linux-users-and-groups-created-and-verified.png)
+
+---
+
+## Part 4 — Create shared support folders
+
+Status: Complete
+
+This part created shared folders for the `support` and `staff` groups and verified that group-based access worked correctly.
+
+The shared folders created were:
+
+```text
+/shared/support
+/shared/staff
+```
+
+The folder ownership was configured as:
+
+```text
+/shared/support  -> root:support
+/shared/staff    -> root:staff
+```
+
+Commands used:
+
+```bash
+sudo mkdir -p /shared/support
+sudo mkdir -p /shared/staff
+
+sudo chown root:support /shared/support
+sudo chown root:staff /shared/staff
+
+sudo chmod 770 /shared/support
+sudo chmod 770 /shared/staff
+
+echo "Support team shared folder" | sudo tee /shared/support/support-notes.txt
+echo "Staff shared folder" | sudo tee /shared/staff/staff-notes.txt
+
+sudo chown root:support /shared/support/support-notes.txt
+sudo chown root:staff /shared/staff/staff-notes.txt
+
+sudo chmod 660 /shared/support/support-notes.txt
+sudo chmod 660 /shared/staff/staff-notes.txt
+
+ls -ld /shared
+ls -ld /shared/support
+ls -ld /shared/staff
+
+sudo ls -l /shared/support
+sudo ls -l /shared/staff
+
+sudo -u alice ls -l /shared/support
+sudo -u alice cat /shared/support/support-notes.txt
+
+sudo -u bob ls -l /shared/staff
+sudo -u bob cat /shared/staff/staff-notes.txt
+
+sudo -u alice ls -l /shared/staff
+sudo -u bob ls -l /shared/support
+```
+
+Results:
+
+* Created `/shared/support`.
+* Created `/shared/staff`.
+* Set `/shared/support` group ownership to `support`.
+* Set `/shared/staff` group ownership to `staff`.
+* Set folder permissions to `770`.
+* Created a support test file.
+* Created a staff test file.
+* Set file permissions to `660`.
+* Verified folder ownership and permissions.
+* Verified that `alice` could access `/shared/support`.
+* Verified that `bob` could access `/shared/staff`.
+* Verified that `alice` was denied access to `/shared/staff`.
+* Verified that `bob` was denied access to `/shared/support`.
+
+Notes:
+
+This part demonstrates basic Linux group-based folder access.
+
+The folder permission `770` allows the owner and group to read, write and enter the folder, while blocking all other users.
+
+The file permission `660` allows the owner and group to read and write the files, while blocking all other users.
+
+Screenshot links:
+
+[screenshot-04a-linux-shared-folders-created.png](screenshots/screenshot-04a-linux-shared-folders-created.png)
+
+[screenshot-04b-linux-shared-folder-access-test.png](screenshots/screenshot-04b-linux-shared-folder-access-test.png)
 
 ---
 
