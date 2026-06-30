@@ -642,3 +642,83 @@ Screenshots:
 ![screenshot-07c-linux-ssh-authentication-logs.png](screenshots/screenshot-07c-linux-ssh-authentication-logs.png)
 
 ![screenshot-07d-linux-firewalld-service-logs.png](screenshots/screenshot-07d-linux-firewalld-service-logs.png)
+
+---
+
+## 2026-06-30 — Part 8: Check disk and system resources
+
+### Goal
+
+Review basic Linux disk usage, memory usage, uptime, logged-in users and CPU process activity.
+
+### Work completed
+
+* Reviewed mounted filesystem disk usage.
+* Reviewed memory usage.
+* Reviewed swap usage.
+* Reviewed system uptime.
+* Reviewed system load average.
+* Reviewed currently logged-in users.
+* Reviewed top CPU-consuming processes.
+* Saved screenshot evidence.
+
+### Verification results
+
+| Item              | Result   |
+| ----------------- | -------- |
+| Disk usage        | Reviewed |
+| Memory usage      | Reviewed |
+| Swap usage        | Reviewed |
+| Uptime            | Reviewed |
+| Load average      | Reviewed |
+| Logged-in users   | Reviewed |
+| Top CPU processes | Reviewed |
+
+### Commands used
+
+```bash
+df -h
+
+free -h
+
+uptime
+who
+
+ps aux --sort=-%cpu | head -10
+```
+
+### Command purpose
+
+| Command                           | Purpose                                                                 |
+| --------------------------------- | ----------------------------------------------------------------------- |
+| `df -h`                           | Shows mounted filesystems and disk usage in human-readable format.      |
+| `free -h`                         | Shows memory and swap usage in human-readable format.                   |
+| `uptime`                          | Shows how long the system has been running and the system load average. |
+| `who`                             | Shows currently logged-in users.                                        |
+| `ps aux --sort=-%cpu \| head -10` | Shows the top CPU-consuming processes.                                  |
+
+### Notes
+
+This part demonstrates basic Linux resource checking.
+
+Disk usage was reviewed to confirm available storage space.
+
+Memory and swap usage were reviewed to check current resource usage.
+
+Uptime and load average were reviewed to understand how long the system had been running and whether the system appeared heavily loaded.
+
+Logged-in users were reviewed to see active sessions.
+
+Top CPU-consuming processes were reviewed to identify whether any process was using high CPU.
+
+### Evidence
+
+Screenshots:
+
+![screenshot-08a-linux-disk-usage.png](screenshots/screenshot-08a-linux-disk-usage.png)
+
+![screenshot-08b-linux-memory-swap-usage.png](screenshots/screenshot-08b-linux-memory-swap-usage.png)
+
+![screenshot-08c-linux-uptime-load-users.png](screenshots/screenshot-08c-linux-uptime-load-users.png)
+
+![screenshot-08d-linux-top-cpu-processes.png](screenshots/screenshot-08d-linux-top-cpu-processes.png)

@@ -51,7 +51,7 @@ The goals of this lab are to:
 | Part 5  | Fix permission problem          | Complete |
 | Part 6  | Troubleshoot stopped service    | Complete |
 | Part 7  | Review logs                     | Complete |
-| Part 8  | Check disk and system resources | Planned  |
+| Part 8  | Check disk and system resources | Complete |
 | Part 9  | Create troubleshooting report   | Planned  |
 | Part 10 | Final README and GitHub polish  | Planned  |
 
@@ -82,7 +82,11 @@ Linux-Helpdesk-Troubleshooting-Lab/
 │   ├── screenshot-07a-linux-recent-system-logs.png
 │   ├── screenshot-07b-linux-warning-error-logs.png
 │   ├── screenshot-07c-linux-ssh-authentication-logs.png
-│   └── screenshot-07d-linux-firewalld-service-logs.png
+│   ├── screenshot-07d-linux-firewalld-service-logs.png
+│   ├── screenshot-08a-linux-disk-usage.png
+│   ├── screenshot-08b-linux-memory-swap-usage.png
+│   ├── screenshot-08c-linux-uptime-load-users.png
+│   └── screenshot-08d-linux-top-cpu-processes.png
 ├── scripts/
 │   └── .gitkeep
 ├── logbook.md
@@ -113,7 +117,9 @@ A stopped service troubleshooting scenario was completed using `firewalld`. The 
 
 Simple system logs were reviewed with `journalctl`. Recent system logs, warning and error logs, SSH authentication logs and `firewalld` service logs were checked and documented with screenshot evidence.
 
-The next step is to check disk and system resources.
+Disk usage, memory usage, uptime, logged-in users and top CPU-consuming processes were reviewed as part of a basic Linux system resource check.
+
+The next step is to create a troubleshooting report.
 
 ---
 
@@ -137,7 +143,10 @@ This project will demonstrate:
 * System log review
 * Warning and error log filtering
 * SSH authentication log review
-* Disk and memory checks
+* Disk usage review with `df`
+* Memory and swap review with `free`
+* Uptime and load review
+* Process review with `ps`
 * Network information review
 * Service status checks with `systemctl`
 * Screenshot-based evidence collection
@@ -177,6 +186,10 @@ Current screenshot evidence:
 | `screenshot-07b-linux-warning-error-logs.png`                    | Warning and error logs reviewed                 |
 | `screenshot-07c-linux-ssh-authentication-logs.png`               | SSH authentication logs reviewed                |
 | `screenshot-07d-linux-firewalld-service-logs.png`                | Firewalld service logs reviewed                 |
+| `screenshot-08a-linux-disk-usage.png`                            | Disk usage reviewed                             |
+| `screenshot-08b-linux-memory-swap-usage.png`                     | Memory and swap usage reviewed                  |
+| `screenshot-08c-linux-uptime-load-users.png`                     | Uptime, load and logged-in users reviewed       |
+| `screenshot-08d-linux-top-cpu-processes.png`                     | Top CPU-consuming processes reviewed            |
 
 Command results and verification output may be stored in:
 
@@ -588,6 +601,61 @@ Screenshot links:
 [screenshot-07c-linux-ssh-authentication-logs.png](screenshots/screenshot-07c-linux-ssh-authentication-logs.png)
 
 [screenshot-07d-linux-firewalld-service-logs.png](screenshots/screenshot-07d-linux-firewalld-service-logs.png)
+
+---
+
+## Part 8 — Check disk and system resources
+
+Status: Complete
+
+This part reviewed basic Linux system resource information.
+
+Commands used:
+
+```bash
+df -h
+
+free -h
+
+uptime
+who
+
+ps aux --sort=-%cpu | head -10
+```
+
+Results:
+
+* Reviewed mounted filesystem disk usage.
+* Reviewed available and used memory.
+* Reviewed swap usage.
+* Reviewed system uptime.
+* Reviewed system load average.
+* Reviewed currently logged-in users.
+* Reviewed top CPU-consuming processes.
+
+Notes:
+
+This part demonstrates basic Linux resource checking.
+
+The `df -h` command was used to review disk usage in a human-readable format.
+
+The `free -h` command was used to review memory and swap usage.
+
+The `uptime` command was used to review system uptime and load average.
+
+The `who` command was used to check currently logged-in users.
+
+The `ps aux --sort=-%cpu | head -10` command was used to review the top CPU-consuming processes.
+
+Screenshot links:
+
+[screenshot-08a-linux-disk-usage.png](screenshots/screenshot-08a-linux-disk-usage.png)
+
+[screenshot-08b-linux-memory-swap-usage.png](screenshots/screenshot-08b-linux-memory-swap-usage.png)
+
+[screenshot-08c-linux-uptime-load-users.png](screenshots/screenshot-08c-linux-uptime-load-users.png)
+
+[screenshot-08d-linux-top-cpu-processes.png](screenshots/screenshot-08d-linux-top-cpu-processes.png)
 
 ---
 
