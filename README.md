@@ -667,6 +667,44 @@ Screenshot links:
 
 ---
 
+---
+
+## Part 10 — Final README and GitHub polish
+
+Status: Complete
+
+This part completed the final project review and repository polish.
+
+The project structure was reviewed to confirm that the main documentation files, report file and screenshot evidence were present.
+
+Commands used:
+
+```powershell
+tree /F
+git status
+```
+
+Results:
+
+* Reviewed the final project folder structure.
+* Confirmed that `README.md` was present.
+* Confirmed that `logbook.md` was present.
+* Confirmed that `docs/troubleshooting-report.md` was present.
+* Confirmed that screenshot evidence was stored in the `screenshots/` folder.
+* Confirmed Git status before the final commit.
+* Added final project structure screenshot evidence.
+
+Notes:
+
+This part completed the final project polish for the Linux Helpdesk Troubleshooting Lab.
+
+The final repository includes the main README, a step-by-step logbook, a troubleshooting report and screenshot evidence from the completed lab tasks.
+
+Screenshot link:
+
+[screenshot-10a-final-project-structure.png](screenshots/screenshot-10a-final-project-structure.png)
+
+
 ## Notes
 
 This is a lab environment and not a production system.

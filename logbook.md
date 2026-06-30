@@ -796,3 +796,62 @@ This is useful for portfolio documentation because it shows not only that comman
 Screenshot:
 
 ![screenshot-09a-linux-troubleshooting-report-created.png](screenshots/screenshot-09a-linux-troubleshooting-report-created.png)
+
+---
+
+## 2026-06-30 — Part 10: Final README and GitHub polish
+
+### Goal
+
+Review the final project structure, confirm documentation is complete and prepare the repository as a finished portfolio project.
+
+### Work completed
+
+* Reviewed the final project folder structure.
+* Confirmed that `README.md` was present.
+* Confirmed that `logbook.md` was present.
+* Confirmed that `docs/troubleshooting-report.md` was present.
+* Confirmed that screenshot evidence was stored in the `screenshots/` folder.
+* Checked Git status.
+* Saved final project structure screenshot evidence.
+* Prepared the repository for final commit and push.
+
+### Verification results
+
+| Item                      | Result   |
+| ------------------------- | -------- |
+| README                    | Present  |
+| Logbook                   | Present  |
+| Troubleshooting report    | Present  |
+| Screenshot folder         | Present  |
+| Final project structure   | Reviewed |
+| Git status                | Checked  |
+| Final evidence screenshot | Saved    |
+
+### Commands used
+
+```powershell
+tree /F
+git status
+```
+
+### Command purpose
+
+| Command      | Purpose                                                                        |
+| ------------ | ------------------------------------------------------------------------------ |
+| `tree /F`    | Shows the final project folder and file structure.                             |
+| `git status` | Shows whether files are staged, unstaged or untracked before the final commit. |
+
+### Notes
+
+This part completed the final documentation and repository review.
+
+The Linux Helpdesk Troubleshooting Lab now includes a main README, a step-by-step logbook, a troubleshooting report and screenshot evidence.
+
+The project demonstrates beginner-friendly Linux helpdesk and junior sysadmin tasks, including baseline checks, users and groups, permissions, service troubleshooting, log review, resource checks and documentation.
+
+### Evidence
+
+Screenshot:
+
+![screenshot-10a-final-project-structure.png](screenshots/screenshot-10a-final-project-structure.png)
