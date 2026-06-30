@@ -50,7 +50,7 @@ The goals of this lab are to:
 | Part 4  | Create shared support folders   | Complete |
 | Part 5  | Fix permission problem          | Complete |
 | Part 6  | Troubleshoot stopped service    | Complete |
-| Part 7  | Review logs                     | Planned  |
+| Part 7  | Review logs                     | Complete |
 | Part 8  | Check disk and system resources | Planned  |
 | Part 9  | Create troubleshooting report   | Planned  |
 | Part 10 | Final README and GitHub polish  | Planned  |
@@ -78,7 +78,11 @@ Linux-Helpdesk-Troubleshooting-Lab/
 │   ├── screenshot-05a-linux-permission-problem-created.png
 │   ├── screenshot-05b-linux-permission-problem-fixed.png
 │   ├── screenshot-06a-linux-service-stopped.png
-│   └── screenshot-06b-linux-service-started-and-logs.png
+│   ├── screenshot-06b-linux-service-started-and-logs.png
+│   ├── screenshot-07a-linux-recent-system-logs.png
+│   ├── screenshot-07b-linux-warning-error-logs.png
+│   ├── screenshot-07c-linux-ssh-authentication-logs.png
+│   └── screenshot-07d-linux-firewalld-service-logs.png
 ├── scripts/
 │   └── .gitkeep
 ├── logbook.md
@@ -107,7 +111,9 @@ A permission problem was created on `/shared/support/support-notes.txt` by chang
 
 A stopped service troubleshooting scenario was completed using `firewalld`. The service was stopped, its inactive state was confirmed with `systemctl`, the service was started again, and the running state was verified. Recent service logs were reviewed with `journalctl`.
 
-The next step is to review simple system logs.
+Simple system logs were reviewed with `journalctl`. Recent system logs, warning and error logs, SSH authentication logs and `firewalld` service logs were checked and documented with screenshot evidence.
+
+The next step is to check disk and system resources.
 
 ---
 
@@ -128,6 +134,9 @@ This project will demonstrate:
 * Basic permission troubleshooting
 * Service troubleshooting with `systemctl`
 * Basic service log review with `journalctl`
+* System log review
+* Warning and error log filtering
+* SSH authentication log review
 * Disk and memory checks
 * Network information review
 * Service status checks with `systemctl`
@@ -164,6 +173,10 @@ Current screenshot evidence:
 | `screenshot-05b-linux-permission-problem-fixed.png`              | Permission problem investigated and fixed       |
 | `screenshot-06a-linux-service-stopped.png`                       | Stopped service problem verified                |
 | `screenshot-06b-linux-service-started-and-logs.png`              | Service restored and logs reviewed              |
+| `screenshot-07a-linux-recent-system-logs.png`                    | Recent system logs reviewed                     |
+| `screenshot-07b-linux-warning-error-logs.png`                    | Warning and error logs reviewed                 |
+| `screenshot-07c-linux-ssh-authentication-logs.png`               | SSH authentication logs reviewed                |
+| `screenshot-07d-linux-firewalld-service-logs.png`                | Firewalld service logs reviewed                 |
 
 Command results and verification output may be stored in:
 
@@ -524,6 +537,57 @@ Screenshot links:
 [screenshot-06a-linux-service-stopped.png](screenshots/screenshot-06a-linux-service-stopped.png)
 
 [screenshot-06b-linux-service-started-and-logs.png](screenshots/screenshot-06b-linux-service-started-and-logs.png)
+
+---
+
+## Part 7 — Review logs
+
+Status: Complete
+
+This part reviewed basic Linux system logs and service logs using `journalctl`.
+
+Commands used:
+
+```bash
+journalctl -n 30 --no-pager
+
+journalctl -p warning -n 30 --no-pager
+
+sudo journalctl _COMM=sshd -n 30 --no-pager
+
+journalctl -u firewalld -n 30 --no-pager
+```
+
+Results:
+
+* Reviewed recent system log entries.
+* Reviewed warning and error log entries.
+* Reviewed SSH authentication and session-related log entries.
+* Reviewed `firewalld` service-specific log entries.
+* Practiced filtering logs by priority.
+* Practiced filtering logs by service or command name.
+
+Notes:
+
+This part demonstrates basic log review with `journalctl`.
+
+The `journalctl -n 30 --no-pager` command was used to show recent system log entries.
+
+The `journalctl -p warning -n 30 --no-pager` command was used to show warning-level and higher-priority log entries.
+
+The `sudo journalctl _COMM=sshd -n 30 --no-pager` command was used to review SSH-related log entries.
+
+The `journalctl -u firewalld -n 30 --no-pager` command was used to review service-specific logs for `firewalld`.
+
+Screenshot links:
+
+[screenshot-07a-linux-recent-system-logs.png](screenshots/screenshot-07a-linux-recent-system-logs.png)
+
+[screenshot-07b-linux-warning-error-logs.png](screenshots/screenshot-07b-linux-warning-error-logs.png)
+
+[screenshot-07c-linux-ssh-authentication-logs.png](screenshots/screenshot-07c-linux-ssh-authentication-logs.png)
+
+[screenshot-07d-linux-firewalld-service-logs.png](screenshots/screenshot-07d-linux-firewalld-service-logs.png)
 
 ---
 

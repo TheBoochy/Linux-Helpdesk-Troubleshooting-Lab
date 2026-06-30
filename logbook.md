@@ -567,3 +567,78 @@ Screenshots:
 ![screenshot-06a-linux-service-stopped.png](screenshots/screenshot-06a-linux-service-stopped.png)
 
 ![screenshot-06b-linux-service-started-and-logs.png](screenshots/screenshot-06b-linux-service-started-and-logs.png)
+
+---
+
+## 2026-06-30 — Part 7: Review logs
+
+### Goal
+
+Review recent Linux system logs, warning and error logs, SSH-related logs and service-specific logs.
+
+### Work completed
+
+* Reviewed recent system log entries.
+* Reviewed warning and error log entries.
+* Reviewed SSH authentication and session-related log entries.
+* Reviewed `firewalld` service-specific logs.
+* Practiced filtering logs with `journalctl`.
+* Saved screenshot evidence.
+
+### Verification results
+
+| Item                    | Result         |
+| ----------------------- | -------------- |
+| Recent system logs      | Reviewed       |
+| Warning and error logs  | Reviewed       |
+| SSH authentication logs | Reviewed       |
+| Firewalld service logs  | Reviewed       |
+| Log tool used           | `journalctl`   |
+| Priority filter used    | `-p warning`   |
+| Service filter used     | `-u firewalld` |
+| Command filter used     | `_COMM=sshd`   |
+
+### Commands used
+
+```bash
+journalctl -n 30 --no-pager
+
+journalctl -p warning -n 30 --no-pager
+
+sudo journalctl _COMM=sshd -n 30 --no-pager
+
+journalctl -u firewalld -n 30 --no-pager
+```
+
+### Command purpose
+
+| Command                                       | Purpose                                                     |
+| --------------------------------------------- | ----------------------------------------------------------- |
+| `journalctl -n 30 --no-pager`                 | Shows the latest 30 system log entries.                     |
+| `journalctl -p warning -n 30 --no-pager`      | Shows recent warning-level and higher-priority log entries. |
+| `sudo journalctl _COMM=sshd -n 30 --no-pager` | Shows recent SSH daemon log entries.                        |
+| `journalctl -u firewalld -n 30 --no-pager`    | Shows recent `firewalld` service log entries.               |
+
+### Notes
+
+This part demonstrates basic Linux log review.
+
+The recent system logs were reviewed to understand current system activity.
+
+Warning and error logs were reviewed to identify possible issues that may need attention.
+
+SSH-related logs were reviewed because SSH is commonly used for remote administration and helpdesk troubleshooting.
+
+`firewalld` logs were reviewed as a service-specific example because `firewalld` was used in the previous stopped-service troubleshooting part.
+
+### Evidence
+
+Screenshots:
+
+![screenshot-07a-linux-recent-system-logs.png](screenshots/screenshot-07a-linux-recent-system-logs.png)
+
+![screenshot-07b-linux-warning-error-logs.png](screenshots/screenshot-07b-linux-warning-error-logs.png)
+
+![screenshot-07c-linux-ssh-authentication-logs.png](screenshots/screenshot-07c-linux-ssh-authentication-logs.png)
+
+![screenshot-07d-linux-firewalld-service-logs.png](screenshots/screenshot-07d-linux-firewalld-service-logs.png)
