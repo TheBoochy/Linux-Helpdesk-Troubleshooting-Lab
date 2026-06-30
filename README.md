@@ -49,7 +49,7 @@ The goals of this lab are to:
 | Part 3  | Create test users and groups    | Complete |
 | Part 4  | Create shared support folders   | Complete |
 | Part 5  | Fix permission problem          | Complete |
-| Part 6  | Troubleshoot stopped service    | Planned  |
+| Part 6  | Troubleshoot stopped service    | Complete |
 | Part 7  | Review logs                     | Planned  |
 | Part 8  | Check disk and system resources | Planned  |
 | Part 9  | Create troubleshooting report   | Planned  |
@@ -76,7 +76,9 @@ Linux-Helpdesk-Troubleshooting-Lab/
 │   ├── screenshot-04a-linux-shared-folders-created.png
 │   ├── screenshot-04b-linux-shared-folder-access-test.png
 │   ├── screenshot-05a-linux-permission-problem-created.png
-│   └── screenshot-05b-linux-permission-problem-fixed.png
+│   ├── screenshot-05b-linux-permission-problem-fixed.png
+│   ├── screenshot-06a-linux-service-stopped.png
+│   └── screenshot-06b-linux-service-started-and-logs.png
 ├── scripts/
 │   └── .gitkeep
 ├── logbook.md
@@ -103,7 +105,9 @@ Shared folders were created under `/shared` for the `support` and `staff` groups
 
 A permission problem was created on `/shared/support/support-notes.txt` by changing the file permission to `600`. This blocked `alice` from reading a file she should normally access through the `support` group. The issue was investigated by checking user group membership, folder permissions and file permissions. The file permission was then restored to `660`, allowing `alice` to read the file again while keeping `bob` denied.
 
-The next step is to troubleshoot a stopped service.
+A stopped service troubleshooting scenario was completed using `firewalld`. The service was stopped, its inactive state was confirmed with `systemctl`, the service was started again, and the running state was verified. Recent service logs were reviewed with `journalctl`.
+
+The next step is to review simple system logs.
 
 ---
 
@@ -122,6 +126,8 @@ This project will demonstrate:
 * Linux permission management with `chmod`
 * Group-based access control
 * Basic permission troubleshooting
+* Service troubleshooting with `systemctl`
+* Basic service log review with `journalctl`
 * Disk and memory checks
 * Network information review
 * Service status checks with `systemctl`
@@ -156,6 +162,8 @@ Current screenshot evidence:
 | `screenshot-04b-linux-shared-folder-access-test.png`             | Shared folder access and blocked access test    |
 | `screenshot-05a-linux-permission-problem-created.png`            | Permission problem created and verified         |
 | `screenshot-05b-linux-permission-problem-fixed.png`              | Permission problem investigated and fixed       |
+| `screenshot-06a-linux-service-stopped.png`                       | Stopped service problem verified                |
+| `screenshot-06b-linux-service-started-and-logs.png`              | Service restored and logs reviewed              |
 
 Command results and verification output may be stored in:
 
@@ -459,6 +467,63 @@ Screenshot links:
 [screenshot-05a-linux-permission-problem-created.png](screenshots/screenshot-05a-linux-permission-problem-created.png)
 
 [screenshot-05b-linux-permission-problem-fixed.png](screenshots/screenshot-05b-linux-permission-problem-fixed.png)
+
+---
+
+## Part 6 — Troubleshoot stopped service
+
+Status: Complete
+
+This part created a basic stopped-service troubleshooting scenario and restored the service.
+
+The service used was:
+
+```text
+firewalld
+```
+
+Commands used:
+
+```bash
+systemctl status firewalld --no-pager
+
+sudo systemctl stop firewalld
+systemctl status firewalld --no-pager
+
+sudo systemctl start firewalld
+systemctl status firewalld --no-pager
+
+journalctl -u firewalld -n 20 --no-pager
+```
+
+Results:
+
+* Checked the initial `firewalld` service status.
+* Stopped the `firewalld` service.
+* Verified that the service was inactive.
+* Started the `firewalld` service again.
+* Verified that the service was active and running.
+* Reviewed recent `firewalld` service logs with `journalctl`.
+
+Notes:
+
+This part demonstrates basic Linux service troubleshooting.
+
+The `systemctl status` command was used to check whether the service was running or stopped.
+
+The `systemctl stop` command was used to create the stopped-service problem.
+
+The `systemctl start` command was used to restore the service.
+
+The `journalctl` command was used to review recent service logs.
+
+`firewalld` was used instead of `sshd` because stopping `sshd` can break the active SSH connection used by VS Code.
+
+Screenshot links:
+
+[screenshot-06a-linux-service-stopped.png](screenshots/screenshot-06a-linux-service-stopped.png)
+
+[screenshot-06b-linux-service-started-and-logs.png](screenshots/screenshot-06b-linux-service-started-and-logs.png)
 
 ---
 

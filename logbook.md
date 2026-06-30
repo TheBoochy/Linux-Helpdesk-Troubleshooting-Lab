@@ -493,3 +493,77 @@ Screenshots:
 ![screenshot-05a-linux-permission-problem-created.png](screenshots/screenshot-05a-linux-permission-problem-created.png)
 
 ![screenshot-05b-linux-permission-problem-fixed.png](screenshots/screenshot-05b-linux-permission-problem-fixed.png)
+
+
+---
+
+## 2026-06-30 — Part 6: Troubleshoot stopped service
+
+### Goal
+
+Create a basic stopped-service troubleshooting scenario, identify the service state, restore the service and review recent logs.
+
+### Work completed
+
+* Checked the initial `firewalld` service status.
+* Stopped the `firewalld` service.
+* Verified that the service was inactive.
+* Started the `firewalld` service again.
+* Verified that the service was active and running.
+* Reviewed recent service logs.
+* Saved screenshot evidence.
+
+### Verification results
+
+| Item                   | Result                                     |
+| ---------------------- | ------------------------------------------ |
+| Service tested         | `firewalld`                                |
+| Service status command | `systemctl status firewalld --no-pager`    |
+| Broken state           | Service stopped                            |
+| Stopped service status | Inactive                                   |
+| Fix command            | `sudo systemctl start firewalld`           |
+| Fixed service status   | Active and running                         |
+| Log review command     | `journalctl -u firewalld -n 20 --no-pager` |
+
+### Commands used
+
+```bash
+systemctl status firewalld --no-pager
+
+sudo systemctl stop firewalld
+systemctl status firewalld --no-pager
+
+sudo systemctl start firewalld
+systemctl status firewalld --no-pager
+
+journalctl -u firewalld -n 20 --no-pager
+```
+
+### Command purpose
+
+| Command                                    | Purpose                                                            |
+| ------------------------------------------ | ------------------------------------------------------------------ |
+| `systemctl status firewalld --no-pager`    | Checks whether the firewall service is active or inactive.         |
+| `sudo systemctl stop firewalld`            | Stops the firewall service to create the troubleshooting scenario. |
+| `sudo systemctl start firewalld`           | Starts the firewall service again.                                 |
+| `journalctl -u firewalld -n 20 --no-pager` | Shows the last 20 log entries for the firewall service.            |
+
+### Notes
+
+This part demonstrates basic service troubleshooting with `systemctl`.
+
+The service was intentionally stopped to create a safe troubleshooting scenario.
+
+After the stopped state was confirmed, the service was started again and verified as active.
+
+Recent logs were reviewed with `journalctl` to confirm service activity.
+
+`firewalld` was used instead of `sshd` because stopping `sshd` can break the SSH connection used by VS Code.
+
+### Evidence
+
+Screenshots:
+
+![screenshot-06a-linux-service-stopped.png](screenshots/screenshot-06a-linux-service-stopped.png)
+
+![screenshot-06b-linux-service-started-and-logs.png](screenshots/screenshot-06b-linux-service-started-and-logs.png)
