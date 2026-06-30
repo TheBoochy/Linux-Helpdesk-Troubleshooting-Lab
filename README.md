@@ -48,7 +48,7 @@ The goals of this lab are to:
 | Part 2  | Linux baseline check            | Complete |
 | Part 3  | Create test users and groups    | Complete |
 | Part 4  | Create shared support folders   | Complete |
-| Part 5  | Fix permission problem          | Planned  |
+| Part 5  | Fix permission problem          | Complete |
 | Part 6  | Troubleshoot stopped service    | Planned  |
 | Part 7  | Review logs                     | Planned  |
 | Part 8  | Check disk and system resources | Planned  |
@@ -74,7 +74,9 @@ Linux-Helpdesk-Troubleshooting-Lab/
 │   ├── screenshot-02d-linux-baseline-services.png
 │   ├── screenshot-03a-linux-users-and-groups-created-and-verified.png
 │   ├── screenshot-04a-linux-shared-folders-created.png
-│   └── screenshot-04b-linux-shared-folder-access-test.png
+│   ├── screenshot-04b-linux-shared-folder-access-test.png
+│   ├── screenshot-05a-linux-permission-problem-created.png
+│   └── screenshot-05b-linux-permission-problem-fixed.png
 ├── scripts/
 │   └── .gitkeep
 ├── logbook.md
@@ -99,7 +101,9 @@ Test users and groups were created for future helpdesk troubleshooting tasks. Th
 
 Shared folders were created under `/shared` for the `support` and `staff` groups. Folder ownership and permissions were configured so that members of the correct group can access their shared folder, while users outside the group are denied access.
 
-The next step is to create and fix a basic permission problem.
+A permission problem was created on `/shared/support/support-notes.txt` by changing the file permission to `600`. This blocked `alice` from reading a file she should normally access through the `support` group. The issue was investigated by checking user group membership, folder permissions and file permissions. The file permission was then restored to `660`, allowing `alice` to read the file again while keeping `bob` denied.
+
+The next step is to troubleshoot a stopped service.
 
 ---
 
@@ -117,6 +121,7 @@ This project will demonstrate:
 * Linux ownership management with `chown`
 * Linux permission management with `chmod`
 * Group-based access control
+* Basic permission troubleshooting
 * Disk and memory checks
 * Network information review
 * Service status checks with `systemctl`
@@ -149,6 +154,8 @@ Current screenshot evidence:
 | `screenshot-03a-linux-users-and-groups-created-and-verified.png` | Test users and groups creation and verification |
 | `screenshot-04a-linux-shared-folders-created.png`                | Shared folder ownership and permission setup    |
 | `screenshot-04b-linux-shared-folder-access-test.png`             | Shared folder access and blocked access test    |
+| `screenshot-05a-linux-permission-problem-created.png`            | Permission problem created and verified         |
+| `screenshot-05b-linux-permission-problem-fixed.png`              | Permission problem investigated and fixed       |
 
 Command results and verification output may be stored in:
 
@@ -382,6 +389,76 @@ Screenshot links:
 [screenshot-04a-linux-shared-folders-created.png](screenshots/screenshot-04a-linux-shared-folders-created.png)
 
 [screenshot-04b-linux-shared-folder-access-test.png](screenshots/screenshot-04b-linux-shared-folder-access-test.png)
+
+---
+
+## Part 5 — Fix permission problem
+
+Status: Complete
+
+This part created a basic Linux permission problem, investigated the cause and fixed it.
+
+The affected file was:
+
+```text
+/shared/support/support-notes.txt
+```
+
+The problem was created by changing the file permission to:
+
+```text
+600
+```
+
+This removed group access from the file and prevented `alice`, a member of the `support` group, from reading it.
+
+Commands used:
+
+```bash
+sudo chmod 600 /shared/support/support-notes.txt
+sudo ls -l /shared/support/support-notes.txt
+
+sudo -u alice cat /shared/support/support-notes.txt
+
+id alice
+getent group support
+ls -ld /shared/support
+sudo ls -l /shared/support/support-notes.txt
+
+sudo chmod 660 /shared/support/support-notes.txt
+sudo ls -l /shared/support/support-notes.txt
+
+sudo -u alice cat /shared/support/support-notes.txt
+sudo -u bob cat /shared/support/support-notes.txt
+```
+
+Results:
+
+* Changed `/shared/support/support-notes.txt` to permission `600`.
+* Verified that `alice` could not read the support file.
+* Checked Alice’s user and group information.
+* Verified that Alice belonged to the `support` group.
+* Verified the `/shared/support` folder ownership and permissions.
+* Verified that the file permission was the cause of the issue.
+* Restored the file permission to `660`.
+* Verified that `alice` could read the file again.
+* Verified that `bob` was still denied access to the support file.
+
+Notes:
+
+This part demonstrates a common beginner Linux troubleshooting workflow.
+
+The issue was caused by file permissions, not by Alice’s user account or group membership.
+
+The permission `600` allowed only the file owner to read and write the file.
+
+The permission `660` restored read and write access for the file owner and group while keeping other users blocked.
+
+Screenshot links:
+
+[screenshot-05a-linux-permission-problem-created.png](screenshots/screenshot-05a-linux-permission-problem-created.png)
+
+[screenshot-05b-linux-permission-problem-fixed.png](screenshots/screenshot-05b-linux-permission-problem-fixed.png)
 
 ---
 

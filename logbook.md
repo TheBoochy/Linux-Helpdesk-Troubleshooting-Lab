@@ -282,3 +282,214 @@ The user `bob` should be lowercase. Linux usernames are case-sensitive, so `bob`
 Screenshots:
 
 ![screenshot-03a-linux-users-and-groups-created-and-verified.png](screenshots/screenshot-03a-linux-users-and-groups-created-and-verified.png)
+
+
+---
+
+## 2026-06-30 — Part 4: Create shared support folders
+
+### Goal
+
+Create shared folders for the `support` and `staff` groups and verify basic group-based access control.
+
+### Work completed
+
+* Created `/shared/support`.
+* Created `/shared/staff`.
+* Set group ownership for the shared folders.
+* Set folder permissions for group-based access.
+* Created a support test file.
+* Created a staff test file.
+* Set group ownership for the test files.
+* Set file permissions for the test files.
+* Verified shared folder ownership.
+* Verified shared folder permissions.
+* Tested correct access for `alice`.
+* Tested correct access for `bob`.
+* Tested blocked access for users outside the correct group.
+* Saved screenshot evidence.
+
+### Verification results
+
+| Item                           | Result            |
+| ------------------------------ | ----------------- |
+| Support shared folder          | `/shared/support` |
+| Staff shared folder            | `/shared/staff`   |
+| Support folder owner/group     | `root:support`    |
+| Staff folder owner/group       | `root:staff`      |
+| Folder permissions             | `770`             |
+| File permissions               | `660`             |
+| Alice access to support folder | Allowed           |
+| Bob access to staff folder     | Allowed           |
+| Alice access to staff folder   | Denied            |
+| Bob access to support folder   | Denied            |
+
+### Commands used
+
+```bash
+sudo mkdir -p /shared/support
+sudo mkdir -p /shared/staff
+
+sudo chown root:support /shared/support
+sudo chown root:staff /shared/staff
+
+sudo chmod 770 /shared/support
+sudo chmod 770 /shared/staff
+
+echo "Support team shared folder" | sudo tee /shared/support/support-notes.txt
+echo "Staff shared folder" | sudo tee /shared/staff/staff-notes.txt
+
+sudo chown root:support /shared/support/support-notes.txt
+sudo chown root:staff /shared/staff/staff-notes.txt
+
+sudo chmod 660 /shared/support/support-notes.txt
+sudo chmod 660 /shared/staff/staff-notes.txt
+
+ls -ld /shared
+ls -ld /shared/support
+ls -ld /shared/staff
+
+sudo ls -l /shared/support
+sudo ls -l /shared/staff
+
+sudo -u alice ls -l /shared/support
+sudo -u alice cat /shared/support/support-notes.txt
+
+sudo -u bob ls -l /shared/staff
+sudo -u bob cat /shared/staff/staff-notes.txt
+
+sudo -u alice ls -l /shared/staff
+sudo -u bob ls -l /shared/support
+```
+
+### Command purpose
+
+| Command                                                                           | Purpose                                                          |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `sudo mkdir -p /shared/support`                                                   | Creates the support shared folder.                               |
+| `sudo mkdir -p /shared/staff`                                                     | Creates the staff shared folder.                                 |
+| `sudo chown root:support /shared/support`                                         | Sets the support folder owner to `root` and group to `support`.  |
+| `sudo chown root:staff /shared/staff`                                             | Sets the staff folder owner to `root` and group to `staff`.      |
+| `sudo chmod 770 /shared/support`                                                  | Allows owner and group full folder access while blocking others. |
+| `sudo chmod 770 /shared/staff`                                                    | Allows owner and group full folder access while blocking others. |
+| `echo "Support team shared folder" \| sudo tee /shared/support/support-notes.txt` | Creates the support test file.                                   |
+| `echo "Staff shared folder" \| sudo tee /shared/staff/staff-notes.txt`            | Creates the staff test file.                                     |
+| `sudo chown root:support /shared/support/support-notes.txt`                       | Sets the support test file group ownership.                      |
+| `sudo chown root:staff /shared/staff/staff-notes.txt`                             | Sets the staff test file group ownership.                        |
+| `sudo chmod 660 /shared/support/support-notes.txt`                                | Allows owner and group read/write access to the support file.    |
+| `sudo chmod 660 /shared/staff/staff-notes.txt`                                    | Allows owner and group read/write access to the staff file.      |
+| `ls -ld /shared`                                                                  | Shows the main shared folder permissions and ownership.          |
+| `ls -ld /shared/support`                                                          | Shows support folder permissions and ownership.                  |
+| `ls -ld /shared/staff`                                                            | Shows staff folder permissions and ownership.                    |
+| `sudo ls -l /shared/support`                                                      | Lists the support folder contents as an administrator.           |
+| `sudo ls -l /shared/staff`                                                        | Lists the staff folder contents as an administrator.             |
+| `sudo -u alice ls -l /shared/support`                                             | Tests whether Alice can access the support folder.               |
+| `sudo -u alice cat /shared/support/support-notes.txt`                             | Tests whether Alice can read the support test file.              |
+| `sudo -u bob ls -l /shared/staff`                                                 | Tests whether Bob can access the staff folder.                   |
+| `sudo -u bob cat /shared/staff/staff-notes.txt`                                   | Tests whether Bob can read the staff test file.                  |
+| `sudo -u alice ls -l /shared/staff`                                               | Confirms Alice is blocked from the staff folder.                 |
+| `sudo -u bob ls -l /shared/support`                                               | Confirms Bob is blocked from the support folder.                 |
+
+### Notes
+
+This part demonstrates basic Linux access control using users, groups, ownership and permissions.
+
+The `support` group can access the support folder, and the `staff` group can access the staff folder.
+
+Users outside the correct group are denied access, which confirms that group-based folder separation works.
+
+This prepares the lab for the next part, where a permission problem will be created and fixed.
+
+### Evidence
+
+Screenshots:
+
+![screenshot-04b-linux-shared-folder-access-test.png](screenshots/screenshot-04b-linux-shared-folder-access-test.png)
+
+---
+
+## 2026-06-30 — Part 5: Fix permission problem
+
+### Goal
+
+Create a basic Linux permission problem, investigate why a user cannot access a file and fix the issue.
+
+### Work completed
+
+* Created a permission problem on `/shared/support/support-notes.txt`.
+* Changed the file permission to `600`.
+* Verified that `alice` could not read the support file.
+* Investigated Alice’s user and group membership.
+* Verified that Alice belonged to the `support` group.
+* Reviewed the `/shared/support` folder permissions.
+* Reviewed the support file permissions.
+* Identified the file permission as the cause of the access problem.
+* Restored the file permission to `660`.
+* Verified that `alice` could read the support file again.
+* Verified that `bob` was still denied access to the support file.
+* Saved screenshot evidence.
+
+### Verification results
+
+| Item                        | Result                               |
+| --------------------------- | ------------------------------------ |
+| Affected file               | `/shared/support/support-notes.txt`  |
+| Broken permission           | `600`                                |
+| Expected fixed permission   | `660`                                |
+| Alice group membership      | `support`                            |
+| Alice access during problem | Denied                               |
+| Alice access after fix      | Allowed                              |
+| Bob access after fix        | Denied                               |
+| Cause of issue              | File permission removed group access |
+
+### Commands used
+
+```bash
+sudo chmod 600 /shared/support/support-notes.txt
+sudo ls -l /shared/support/support-notes.txt
+
+sudo -u alice cat /shared/support/support-notes.txt
+
+id alice
+getent group support
+ls -ld /shared/support
+sudo ls -l /shared/support/support-notes.txt
+
+sudo chmod 660 /shared/support/support-notes.txt
+sudo ls -l /shared/support/support-notes.txt
+
+sudo -u alice cat /shared/support/support-notes.txt
+sudo -u bob cat /shared/support/support-notes.txt
+```
+
+### Command purpose
+
+| Command                                               | Purpose                                                                                    |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `sudo chmod 600 /shared/support/support-notes.txt`    | Creates the permission problem by allowing only the file owner to read and write the file. |
+| `sudo ls -l /shared/support/support-notes.txt`        | Shows the file permission while using administrator privileges.                            |
+| `sudo -u alice cat /shared/support/support-notes.txt` | Tests whether Alice can read the support file.                                             |
+| `id alice`                                            | Shows Alice’s user ID and group memberships.                                               |
+| `getent group support`                                | Confirms that Alice belongs to the `support` group.                                        |
+| `ls -ld /shared/support`                              | Shows the support folder ownership and permissions.                                        |
+| `sudo chmod 660 /shared/support/support-notes.txt`    | Fixes the permission by restoring owner and group read/write access.                       |
+| `sudo -u alice cat /shared/support/support-notes.txt` | Verifies that Alice can read the file after the fix.                                       |
+| `sudo -u bob cat /shared/support/support-notes.txt`   | Confirms Bob is still denied access to the support file.                                   |
+
+### Notes
+
+This part demonstrates a realistic helpdesk troubleshooting process.
+
+The access problem was not caused by Alice’s account or group membership. Alice was correctly added to the `support` group.
+
+The problem was caused by the file permission `600`, which removed group access from the file.
+
+Changing the file permission back to `660` restored access for the support group while keeping users outside the group denied.
+
+### Evidence
+
+Screenshots:
+
+![screenshot-05a-linux-permission-problem-created.png](screenshots/screenshot-05a-linux-permission-problem-created.png)
+
+![screenshot-05b-linux-permission-problem-fixed.png](screenshots/screenshot-05b-linux-permission-problem-fixed.png)
